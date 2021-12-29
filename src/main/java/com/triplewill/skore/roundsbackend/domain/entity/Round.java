@@ -1,7 +1,14 @@
 package com.triplewill.skore.roundsbackend.domain.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.UUID;
 
+@Getter
+@Setter
+@ToString
 public class Round {
 
     private UUID id;
@@ -12,19 +19,4 @@ public class Round {
         this.score = 72;
     }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
-    }
 }
