@@ -22,21 +22,21 @@ public class RoundsApiController {
     private final RoundsService roundsService;
 
     @Operation(summary = "Get all registered rounds")
-    @GetMapping
+    @GetMapping(produces = "application/json")
     public Collection<Round> getRounds(){
         System.out.println("GET /api/rounds");
         return roundsService.getRounds();
     }
 
     @Operation(summary = "Get a round by its id")
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = "application/json")
     public Round getRoundById(@Parameter(description = "id of round to be fetched") @PathVariable UUID id){
         System.out.println("GET /api/rounds/" + id);
         return roundsService.getRoundById(id);
     }
 
     @Operation(summary = "Update a specific round")
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", produces = "application/json")
     public Round updateRound(@Parameter(description = "id of round to be updated") @PathVariable UUID id){
         System.out.println("PUT /api/rounds/" + id);
         return roundsService.updateRound(id);
