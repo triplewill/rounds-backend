@@ -9,6 +9,9 @@ group = 'com.triplewill.skore'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+def artifactId = 'rounds-backend'
+def dockerImagePrefix = 'triplewill'
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -28,3 +31,21 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+jar {
+	archivesBaseName = "${artifactId}"
+}
+
+task unpackedBootJar(type: Copy) {
+	def jarFile = file("build/libs/${artifactId}-${version}.jar")
+	def outputDir = file('build/unpackedBootJar')
+
+	from zipTree(jarFile)
+	into outputDir
+}
+unpackedBootJar.dependsOn(assemble)
+
+task docker(type:Exec) {
+	commandLine 'docker', 'build', '-f', 'Dockerfile', '.', '-t', "${dockerImagePrefix}/${artifactId}:latest"
+}
+docker.dependsOn(clean, unpackedBootJar)
